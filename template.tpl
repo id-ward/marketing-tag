@@ -1,32 +1,26 @@
-// Copyright 2019 Google LLC
+﻿___TERMS_OF_SERVICE___
 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+By creating or modifying this file you agree to Google Tag Manager's Community
+Template Gallery Developer Terms of Service available at
+https://developers.google.com/tag-manager/gallery-tos (or such other URL as
+Google may provide), as modified from time to time.
 
-//     https://www.apache.org/licenses/LICENSE-2.0
-
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 ___INFO___
 
 {
-  "displayName": "Example Template",
-  "description": "This is an example template. For more information, visit https://developers.google.com/tag-manager/templates",
-  "categories": ["AFFILIATE_MARKETING", "ADVERTISING"],
-  "securityGroups": [],
-  "id": "cvt_temp_public_id",
   "type": "TAG",
+  "id": "cvt_temp_public_id",
   "version": 1,
+  "securityGroups": [],
+  "displayName": "Anonymised Marketing Tag",
+  "categories": ["ADVERTISING", "ANALYTICS", "ATTRIBUTION", "CONVERSIONS", "REMARKETING"],
   "brand": {
-    "thumbnail": "",
+    "id": "brand_dummy",
     "displayName": "",
-    "id": "brand_dummy"
+    "thumbnail": "data:image/jpeg;base64,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"
   },
+  "description": "A small JavaScript snippet deployed on every page which enables all the capabilities of cohort-based advertising without the need for cookies.\n\nFor more information contact: support@anonymised.io.",
   "containerContexts": [
     "WEB"
   ]
@@ -37,13 +31,165 @@ ___TEMPLATE_PARAMETERS___
 
 [
   {
-    "help": "Enter an example measurement ID. The value can be any character. This is only an example.",
-    "displayName": "Example Measurement ID",
-    "defaultValue": "foobarbaz1234",
-    "name": "MeasurementID",
-    "type": "TEXT"
+    "type": "GROUP",
+    "name": "Required settings",
+    "displayName": "Required settings",
+    "groupStyle": "NO_ZIPPY",
+    "subParams": [
+      {
+        "type": "TEXT",
+        "name": "ClientId",
+        "displayName": "Anonymised Client Id",
+        "simpleValueType": true,
+        "notSetText": "{Enter your Anonymised Client Id; available from your technical account manager or support}",
+        "alwaysInSummary": false,
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "GROUP",
+    "name": "Optional settings",
+    "displayName": "Optional settings",
+    "groupStyle": "NO_ZIPPY",
+    "subParams": [
+      {
+        "type": "SELECT",
+        "name": "CmpProvider",
+        "displayName": "Choose your Consent Management Platform to activate the Anonymised Data Account widget",
+        "macrosInSelect": false,
+        "selectItems": [
+          {
+            "value": "clickio",
+            "displayValue": "Clickio"
+          },
+          {
+            "value": "consentmanager",
+            "displayValue": "Consent Manager"
+          },
+          {
+            "value": "cookiebot",
+            "displayValue": "CookieBot"
+          },
+          {
+            "value": "cookiepro",
+            "displayValue": "CookiePro"
+          },
+          {
+            "value": "iubenda",
+            "displayValue": "Iubenda"
+          },
+          {
+            "value": "liveramp",
+            "displayValue": "Liveramp Privacy Manager"
+          },
+          {
+            "value": "onetrust",
+            "displayValue": "OneTrust"
+          },
+          {
+            "value": "quantcast",
+            "displayValue": "Quantcast Choice"
+          },
+          {
+            "value": "sourcepoint",
+            "displayValue": "Sourcepoint Dialogue"
+          },
+          {
+            "value": "uniconsent",
+            "displayValue": "UniConsent"
+          }
+        ],
+        "simpleValueType": true,
+        "notSetText": ""
+      },
+      {
+        "type": "TEXT",
+        "name": "SourcepointPMId",
+        "displayName": "Sourcepoint Privacy Manager Id",
+        "simpleValueType": true,
+        "enablingConditions": [
+          {
+            "paramName": "CmpProvider",
+            "paramValue": "sourcepoint",
+            "type": "EQUALS"
+          }
+        ],
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          }
+        ]
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "NotIntegrateCmp",
+        "checkboxText": "Switch off the Consent Management Settings option",
+        "simpleValueType": true,
+        "displayName": "Check to remove the Consent Management Settings option from the Anonymised Data Account widget",
+        "enablingConditions": [
+          {
+            "paramName": "CmpProvider",
+            "paramValue": "",
+            "type": "PRESENT"
+          }
+        ]
+      },
+      {
+        "type": "TEXT",
+        "name": "PrimaryColor",
+        "displayName": "Set the colour of the Anonymised Data Account widget",
+        "simpleValueType": true,
+        "defaultValue": "#11304d",
+        "enablingConditions": [
+          {
+            "paramName": "CmpProvider",
+            "paramValue": "",
+            "type": "PRESENT"
+          }
+        ]
+      }
+    ]
   }
 ]
+
+
+___SANDBOXED_JS_FOR_WEB_TEMPLATE___
+
+const log = require('logToConsole');
+const injectScript = require('injectScript');
+const localStorage = require('localStorage');
+
+log('data =', data);
+
+const src = 'https://id-ward.com/static/light/idw_plugin_light.min.js';
+const cmpProvider = data.CmpProvider;
+const clientId = data.ClientId;
+const sppmId = data.SourcepointPMId;
+
+const primaryColor = data.PrimaryColor;
+const notIntegrateCmp = data.NotIntegrateCmp;
+
+localStorage.setItem('idw_client_id', clientId);
+
+const cmp = sppmId ? 'sourcepoint:'+sppmId : cmpProvider;
+localStorage.setItem('idw_cmp_provider', cmp);
+
+localStorage.setItem('idw_hide_button', cmpProvider===undefined);
+
+if(primaryColor===undefined) {
+  localStorage.removeItem('idw_color_primary');
+} else {
+  localStorage.setItem('idw_color_primary', primaryColor);
+}
+
+localStorage.setItem('idw_not_integrate_cmp', !!notIntegrateCmp);
+
+injectScript(src, data.gtmOnSuccess, data.gtmOnFailure);
 
 
 ___WEB_PERMISSIONS___
@@ -65,46 +211,224 @@ ___WEB_PERMISSIONS___
         }
       ]
     },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
     "isRequired": true
   },
   {
     "instance": {
       "key": {
-        "publicId": "get_referrer",
+        "publicId": "inject_script",
         "versionId": "1"
       },
       "param": [
         {
-          "key": "urlParts",
+          "key": "urls",
           "value": {
-            "type": 1,
-            "string": "any"
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "https://id-ward.com/static/light/*"
+              }
+            ]
           }
         }
       ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "access_local_storage",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "keys",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "idw_client_id"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "idw_cmp_provider"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "idw_color_primary"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "idw_not_integrate_cmp"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "idw_hide_button"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
     },
     "isRequired": true
   }
 ]
 
 
-___SANDBOXED_JS_FOR_WEB_TEMPLATE___
+___TESTS___
 
-// Enter your template code here.
-const queryPermission = require('queryPermission');
-const getReferrerUrl = require('getReferrerUrl');
-let referrer;
-if (queryPermission('get_referrer', 'query')) {
-  referrer = getReferrerUrl('queryParams');
-}
-
-var log = require('logToConsole');
-log('data =', data);
-
-// Call data.gtmOnSuccess when the tag is finished.
-data.gtmOnSuccess();
+scenarios: []
 
 
 ___NOTES___
 
-Created on 9/2/2019, 1:02:37 PM
+Created on 1/26/2023, 12:40:43 PM
+
+
