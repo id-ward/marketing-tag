@@ -80,6 +80,10 @@ ___TEMPLATE_PARAMETERS___
             "displayValue": "CookiePro"
           },
           {
+            "value": "googlefc",
+            "displayValue": "Google Funding Choices"
+          },
+          {
             "value": "iubenda",
             "displayValue": "Iubenda"
           },
