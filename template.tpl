@@ -14,7 +14,6 @@ ___INFO___
   "version": 1,
   "securityGroups": [],
   "displayName": "Anonymised Marketing Tag",
-  "categories": ["ADVERTISING", "ANALYTICS", "ATTRIBUTION", "CONVERSIONS", "REMARKETING"],
   "brand": {
     "id": "brand_dummy",
     "displayName": "",
@@ -170,7 +169,7 @@ const localStorage = require('localStorage');
 
 log('data =', data);
 
-const src = 'https://id-ward.com/static/light/idw_plugin_light.min.js';
+const src = 'https://static.anonymised.io/light/idw_plugin_light.min.js';
 const cmpProvider = data.CmpProvider;
 const clientId = data.ClientId;
 const sppmId = data.SourcepointPMId;
@@ -234,7 +233,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://id-ward.com/static/light/*"
+                "string": "https://static.anonymised.io/light/*"
               }
             ]
           }
