@@ -155,6 +155,39 @@ ___TEMPLATE_PARAMETERS___
             "type": "PRESENT"
           }
         ]
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "PageExclusionSwitch",
+        "checkboxText": "Tick to set-up page exclusion",
+        "simpleValueType": true
+      },
+      {
+        "type": "SIMPLE_TABLE",
+        "name": "PagesForExclusion",
+        "displayName": "A list of pages excluded from running the browser login [e.g. customer feedback forms]. Enter one page per line.",
+        "simpleTableColumns": [
+          {
+            "defaultValue": "",
+            "displayName": "Page URL [e.g. /privacy-policy]",
+            "name": "pageURL",
+            "type": "TEXT"
+          }
+        ],
+        "enablingConditions": [
+          {
+            "paramName": "PageExclusionSwitch",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ],
+        "newRowButtonText": "Add a new page"
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "PrivacyControlOverride",
+        "checkboxText": "Tick to operate the tag without privacy control [privacy unregulated US states only]. Responsibility and liability for running the tag in this mode remains solely with the GTM tag administrator and not Anonymised.",
+        "simpleValueType": true
       }
     ]
   }
@@ -166,16 +199,20 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 const log = require('logToConsole');
 const injectScript = require('injectScript');
 const localStorage = require('localStorage');
+const JSON = require('JSON');
 
 log('data =', data);
 
-const src = 'https://static.anonymised.io/light/idw_plugin_light.min.js';
+const src = 'https://static.anonymised.io/light/loader.js';
 const cmpProvider = data.CmpProvider;
 const clientId = data.ClientId;
 const sppmId = data.SourcepointPMId;
 
 const primaryColor = data.PrimaryColor;
 const notIntegrateCmp = data.NotIntegrateCmp;
+const pageExclusionSwitch = data.PageExclusionSwitch;
+const exclusionPageURLs = data.PagesForExclusion;
+const privacyOverride = data.PrivacyControlOverride;
 
 localStorage.setItem('idw_client_id', clientId);
 
@@ -191,6 +228,19 @@ if(primaryColor===undefined) {
 }
 
 localStorage.setItem('idw_not_integrate_cmp', !!notIntegrateCmp);
+
+if(pageExclusionSwitch && exclusionPageURLs && exclusionPageURLs.length > 0){
+  const urlExceptionList = exclusionPageURLs.map(x => x.pageURL);
+  localStorage.setItem('idw_login_exception_pages', JSON.stringify(urlExceptionList));
+}else{
+  localStorage.removeItem('idw_login_exception_pages');
+}
+
+if(privacyOverride===undefined || privacyOverride===false){
+  localStorage.removeItem('soft_privacy_regulated');
+} else {
+  localStorage.setItem('soft_privacy_regulated', privacyOverride);
+}
 
 injectScript(src, data.gtmOnSuccess, data.gtmOnFailure);
 
@@ -401,6 +451,68 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "idw_hide_button"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "soft_privacy_regulated"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "idw_login_exception_pages"
                   },
                   {
                     "type": 8,
