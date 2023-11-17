@@ -158,6 +158,12 @@ ___TEMPLATE_PARAMETERS___
       },
       {
         "type": "CHECKBOX",
+        "name": "RetargetingSwitch",
+        "checkboxText": "Tick to enable retargeting",
+        "simpleValueType": true
+      },
+      {
+        "type": "CHECKBOX",
         "name": "PageExclusionSwitch",
         "checkboxText": "Tick to set-up page exclusion",
         "simpleValueType": true
@@ -186,8 +192,15 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "CHECKBOX",
         "name": "PrivacyControlOverride",
-        "checkboxText": "Tick to operate the tag without privacy control [privacy unregulated US states only]. Responsibility and liability for running the tag in this mode remains solely with the GTM tag administrator and not Anonymised.",
-        "simpleValueType": true
+        "checkboxText": "Soft Privacy Regulated - see https://support.anonymised.io/integrate/consent-and-the-anonymised-marketing-tag",
+        "simpleValueType": true,
+        "enablingConditions": [
+          {
+            "paramName": "1",
+            "paramValue": 2,
+            "type": "EQUALS"
+          }
+        ]
       }
     ]
   }
@@ -210,6 +223,7 @@ const sppmId = data.SourcepointPMId;
 
 const primaryColor = data.PrimaryColor;
 const notIntegrateCmp = data.NotIntegrateCmp;
+const retargetingSwitch = data.RetargetingSwitch;
 const pageExclusionSwitch = data.PageExclusionSwitch;
 const exclusionPageURLs = data.PagesForExclusion;
 const privacyOverride = data.PrivacyControlOverride;
@@ -229,6 +243,10 @@ if(primaryColor===undefined) {
 
 localStorage.setItem('idw_not_integrate_cmp', !!notIntegrateCmp);
 
+if(retargetingSwitch){
+  localStorage.setItem('retargeting_on', retargetingSwitch);  
+}
+
 if(pageExclusionSwitch && exclusionPageURLs && exclusionPageURLs.length > 0){
   const urlExceptionList = exclusionPageURLs.map(x => x.pageURL);
   localStorage.setItem('idw_login_exception_pages', JSON.stringify(urlExceptionList));
@@ -236,11 +254,12 @@ if(pageExclusionSwitch && exclusionPageURLs && exclusionPageURLs.length > 0){
   localStorage.removeItem('idw_login_exception_pages');
 }
 
+/*
 if(privacyOverride===undefined || privacyOverride===false){
   localStorage.removeItem('soft_privacy_regulated');
 } else {
   localStorage.setItem('soft_privacy_regulated', privacyOverride);
-}
+}*/
 
 injectScript(src, data.gtmOnSuccess, data.gtmOnFailure);
 
@@ -513,6 +532,37 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "idw_login_exception_pages"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "retargeting_on"
                   },
                   {
                     "type": 8,
