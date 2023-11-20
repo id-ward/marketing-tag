@@ -17,11 +17,11 @@ documentation: "https://support.anonymised.io/integrate/install-the-anonymised-t
 versions:
   - sha: 6eedcb891c0d2bdc9d2412d4a0ced213e2cf4ddc
     changeNotes: |3
-      Retargeting support
+        Retargeting support
   - sha: a4d67822e3e601ec45a491a3d6d47d3527b17eee
     changeNotes: |2
-      Google Funding Choices support added
-      Removed redundant categories
-      loader.js path updated, new tag settings added
+        Google Funding Choices support added
+        Removed redundant categories
+        loader.js path updated, new tag settings added
   - sha: eb02a8c60e275e2a771b9ae15d0916f94f6c685a
     changeNotes: Initial release
