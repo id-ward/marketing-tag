@@ -15,6 +15,10 @@
 homepage: "https://www.anonymised.io"
 documentation: "https://support.anonymised.io/integrate/install-the-anonymised-tag-using-gtm"
 versions:
+  - sha: 8eeec644ddf45c88d99826766e99843cc4fc5eb9
+    changeNotes: |4
+        No IAB TCF mode support
+        Better fields description
   - sha: 6eedcb891c0d2bdc9d2412d4a0ced213e2cf4ddc
     changeNotes: |3
         Retargeting support
