@@ -38,9 +38,9 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "TEXT",
         "name": "ClientId",
-        "displayName": "Anonymised Client Id",
+        "displayName": "Anonymised Client ID",
         "simpleValueType": true,
-        "notSetText": "{Enter your Anonymised Client Id; available from your technical account manager or support}",
+        "notSetText": "{Enter your Anonymised Client Id; available from your Customer Success Manager or Support}",
         "alwaysInSummary": false,
         "valueValidators": [
           {
@@ -54,12 +54,16 @@ ___TEMPLATE_PARAMETERS___
     "type": "GROUP",
     "name": "Optional settings",
     "displayName": "Optional settings",
-    "groupStyle": "NO_ZIPPY",
+    "groupStyle": "ZIPPY_CLOSED",
     "subParams": [
+      {
+        "type": "LABEL",
+        "name": "lblConsentManagementConfiguration",
+        "displayName": "Consent Management Configuration"
+      },
       {
         "type": "SELECT",
         "name": "CmpProvider",
-        "displayName": "Choose your Consent Management Platform to activate the Anonymised Data Account widget",
         "macrosInSelect": false,
         "selectItems": [
           {
@@ -108,12 +112,31 @@ ___TEMPLATE_PARAMETERS___
           }
         ],
         "simpleValueType": true,
+        "displayName": "Select the Consent Management Platform to handle user consent [this can be left blank or selected for TCF]",
         "notSetText": ""
       },
       {
         "type": "TEXT",
+        "name": "CookieActiveGroup",
+        "displayName": "Please enter a valid Cookie Active Group [this is required when not using TCF in your CMP]",
+        "simpleValueType": true,
+        "enablingConditions": [
+          {
+            "paramName": "CmpProvider",
+            "paramValue": "onetrust",
+            "type": "EQUALS"
+          },
+          {
+            "paramName": "CmpProvider",
+            "paramValue": "cookiepro",
+            "type": "EQUALS"
+          }
+        ]
+      },
+      {
+        "type": "TEXT",
         "name": "SourcepointPMId",
-        "displayName": "Sourcepoint Privacy Manager Id",
+        "displayName": "Please enter your Sourcepoint Dialogue Privacy Manager ID [this is required when using Sourcepoint Dialogue as your CMP]",
         "simpleValueType": true,
         "enablingConditions": [
           {
@@ -130,24 +153,10 @@ ___TEMPLATE_PARAMETERS___
       },
       {
         "type": "CHECKBOX",
-        "name": "NotIntegrateCmp",
-        "checkboxText": "Switch off the Consent Management Settings option",
+        "name": "ShowWidget",
+        "checkboxText": "Display the Anonymised widget",
         "simpleValueType": true,
-        "displayName": "Check to remove the Consent Management Settings option from the Anonymised Data Account widget",
-        "enablingConditions": [
-          {
-            "paramName": "CmpProvider",
-            "paramValue": "",
-            "type": "PRESENT"
-          }
-        ]
-      },
-      {
-        "type": "TEXT",
-        "name": "PrimaryColor",
-        "displayName": "Set the colour of the Anonymised Data Account widget",
-        "simpleValueType": true,
-        "defaultValue": "#11304d",
+        "defaultValue": false,
         "enablingConditions": [
           {
             "paramName": "CmpProvider",
@@ -158,14 +167,47 @@ ___TEMPLATE_PARAMETERS___
       },
       {
         "type": "CHECKBOX",
+        "name": "NotIntegrateCmp",
+        "checkboxText": "Remove the preferences option from the Anonymised widget",
+        "simpleValueType": true,
+        "enablingConditions": [
+          {
+            "paramName": "ShowWidget",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ],
+        "defaultValue": false
+      },
+      {
+        "type": "TEXT",
+        "name": "PrimaryColor",
+        "displayName": "Set the colour of the Anonymised widget",
+        "simpleValueType": true,
+        "defaultValue": "#11304d",
+        "enablingConditions": [
+          {
+            "paramName": "ShowWidget",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ]
+      },
+      {
+        "type": "LABEL",
+        "name": "lblAdditionalConfiguration",
+        "displayName": "Additional Configuration"
+      },
+      {
+        "type": "CHECKBOX",
         "name": "RetargetingSwitch",
-        "checkboxText": "Tick to enable retargeting",
+        "checkboxText": "Enable retargeting",
         "simpleValueType": true
       },
       {
         "type": "CHECKBOX",
         "name": "PageExclusionSwitch",
-        "checkboxText": "Tick to set-up page exclusion",
+        "checkboxText": "Configure page exclusions",
         "simpleValueType": true
       },
       {
@@ -217,23 +259,30 @@ const JSON = require('JSON');
 log('data =', data);
 
 const src = 'https://static.anonymised.io/light/loader.js';
-const cmpProvider = data.CmpProvider;
 const clientId = data.ClientId;
-const sppmId = data.SourcepointPMId;
 
-const primaryColor = data.PrimaryColor;
+const cmpProvider = data.CmpProvider;
+const sppmId = data.SourcepointPMId;
+const cookieActiveGroup = data.CookieActiveGroup;
+const showWidget = data.ShowWidget;
 const notIntegrateCmp = data.NotIntegrateCmp;
+const primaryColor = data.PrimaryColor;
 const retargetingSwitch = data.RetargetingSwitch;
 const pageExclusionSwitch = data.PageExclusionSwitch;
 const exclusionPageURLs = data.PagesForExclusion;
 const privacyOverride = data.PrivacyControlOverride;
 
 localStorage.setItem('idw_client_id', clientId);
+localStorage.setItem('idw_hide_button', !showWidget);
 
 const cmp = sppmId ? 'sourcepoint:'+sppmId : cmpProvider;
 localStorage.setItem('idw_cmp_provider', cmp);
 
-localStorage.setItem('idw_hide_button', cmpProvider===undefined);
+if(cookieActiveGroup===undefined || cmpProvider===undefined) {
+  localStorage.removeItem('idw_cmp_provider_cookie_group');
+} else {
+  localStorage.setItem('idw_cmp_provider_cookie_group', cookieActiveGroup);
+}
 
 if(primaryColor===undefined) {
   localStorage.removeItem('idw_color_primary');
@@ -241,7 +290,11 @@ if(primaryColor===undefined) {
   localStorage.setItem('idw_color_primary', primaryColor);
 }
 
-localStorage.setItem('idw_not_integrate_cmp', !!notIntegrateCmp);
+if(notIntegrateCmp===undefined) {
+  localStorage.removeItem('idw_not_integrate_cmp');  
+} else {
+  localStorage.setItem('idw_not_integrate_cmp', notIntegrateCmp);
+}
 
 if(retargetingSwitch){
   localStorage.setItem('retargeting_on', retargetingSwitch);  
@@ -260,7 +313,6 @@ if(privacyOverride===undefined || privacyOverride===false){
 } else {
   localStorage.setItem('soft_privacy_regulated', privacyOverride);
 }*/
-
 injectScript(src, data.gtmOnSuccess, data.gtmOnFailure);
 
 
@@ -563,6 +615,37 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "retargeting_on"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "idw_cmp_provider_cookie_group"
                   },
                   {
                     "type": 8,
