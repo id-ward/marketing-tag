@@ -130,6 +130,11 @@ ___TEMPLATE_PARAMETERS___
             "paramName": "CmpProvider",
             "paramValue": "cookiepro",
             "type": "EQUALS"
+          },
+          {
+            "paramName": "CmpProvider",
+            "paramValue": "iubenda",
+            "type": "EQUALS"
           }
         ]
       },
