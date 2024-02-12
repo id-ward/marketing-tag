@@ -15,15 +15,18 @@
 homepage: "https://www.anonymised.io"
 documentation: "https://support.anonymised.io/integrate/install-the-anonymised-tag-using-gtm"
 versions:
+  - sha: 479c2ff19b1069fb45f0f68d38bdc35ad739b407
+    changeNotes: >
+        No IAB TCF mode support for Iubenda
   - sha: 8eeec644ddf45c88d99826766e99843cc4fc5eb9
-    changeNotes: |4
+    changeNotes: >
         No IAB TCF mode support
         Better fields description
   - sha: 6eedcb891c0d2bdc9d2412d4a0ced213e2cf4ddc
-    changeNotes: |3
+    changeNotes: >
         Retargeting support
   - sha: a4d67822e3e601ec45a491a3d6d47d3527b17eee
-    changeNotes: |2
+    changeNotes: >
         Google Funding Choices support added
         Removed redundant categories
         loader.js path updated, new tag settings added
