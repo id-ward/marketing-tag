@@ -263,7 +263,7 @@ const JSON = require('JSON');
 
 log('data =', data);
 
-const src = 'https://static.anonymised.io/light/loader.js';
+const src = 'https://static.anonymised.io/light/loader.js?ref=gtm';
 const clientId = data.ClientId;
 
 const cmpProvider = data.CmpProvider;
