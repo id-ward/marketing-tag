@@ -15,6 +15,9 @@
 homepage: "https://www.anonymised.io"
 documentation: "https://support.anonymised.io/integrate/install-the-anonymised-tag-using-gtm"
 versions:
+  - sha: 937eea1637b562a0710da19985cc346f9ac848b5
+    changeNotes: >
+        Mark the Anonymised Tag when it's installed by GTM
   - sha: 479c2ff19b1069fb45f0f68d38bdc35ad739b407
     changeNotes: >
         No IAB TCF mode support for Iubenda
