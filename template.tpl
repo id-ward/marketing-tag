@@ -100,7 +100,7 @@ ___TEMPLATE_PARAMETERS___
           },
           {
             "value": "quantcast",
-            "displayValue": "Quantcast Choice"
+            "displayValue": "InMobi Choice"
           },
           {
             "value": "sourcepoint",
@@ -109,6 +109,14 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "uniconsent",
             "displayValue": "UniConsent"
+          },
+          {
+            "value": "cookiescript",
+            "displayValue": "CookieScript"
+          },
+          {
+            "value": "klaro",
+            "displayValue": "Klaro"
           }
         ],
         "simpleValueType": true,
@@ -134,6 +142,16 @@ ___TEMPLATE_PARAMETERS___
           {
             "paramName": "CmpProvider",
             "paramValue": "iubenda",
+            "type": "EQUALS"
+          },
+          {
+            "paramName": "CmpProvider",
+            "paramValue": "cookiescript",
+            "type": "EQUALS"
+          },
+          {
+            "paramName": "CmpProvider",
+            "paramValue": "klaro",
             "type": "EQUALS"
           }
         ]
