@@ -15,6 +15,9 @@
 homepage: "https://www.anonymised.io"
 documentation: "https://support.anonymised.io/integrate/install-the-anonymised-tag-using-gtm"
 versions:
+  - sha: 65794619eb5006fccea41ea6f4d508740e4b2725
+    changeNotes: >
+        Added support for CookieScript and Klaro CMPs
   - sha: 937eea1637b562a0710da19985cc346f9ac848b5
     changeNotes: >
         Mark the Anonymised Tag when it's installed by GTM
