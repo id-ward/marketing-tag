@@ -234,6 +234,12 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true
       },
       {
+        "type": "CHECKBOX",
+        "name": "LoginInNewTabSwitch",
+        "checkboxText": "Enable login in new tab",
+        "simpleValueType": true
+      },
+      {
         "type": "SIMPLE_TABLE",
         "name": "PagesForExclusion",
         "displayName": "A list of pages excluded from running the browser login [e.g. customer feedback forms]. Enter one page per line.",
@@ -294,40 +300,45 @@ const retargetingSwitch = data.RetargetingSwitch;
 const pageExclusionSwitch = data.PageExclusionSwitch;
 const exclusionPageURLs = data.PagesForExclusion;
 const privacyOverride = data.PrivacyControlOverride;
+const loginInNewTabSwitch = data.LoginInNewTabSwitch;
 
-localStorage.setItem('idw_client_id', clientId);
-localStorage.setItem('idw_hide_button', !showWidget);
+localStorage.setItem('client-id', clientId);
+localStorage.setItem('hide-button', !showWidget);
 
 const cmp = sppmId ? 'sourcepoint:'+sppmId : cmpProvider;
-localStorage.setItem('idw_cmp_provider', cmp);
+localStorage.setItem('cmp-provider', cmp);
 
 if(cookieActiveGroup===undefined || cmpProvider===undefined) {
-  localStorage.removeItem('idw_cmp_provider_cookie_group');
+  localStorage.removeItem('cmp-provider-cookie-group');
 } else {
-  localStorage.setItem('idw_cmp_provider_cookie_group', cookieActiveGroup);
+  localStorage.setItem('cmp-provider-cookie-group', cookieActiveGroup);
 }
 
 if(primaryColor===undefined) {
-  localStorage.removeItem('idw_color_primary');
+  localStorage.removeItem('color-primary');
 } else {
-  localStorage.setItem('idw_color_primary', primaryColor);
+  localStorage.setItem('color-primary', primaryColor);
 }
 
 if(notIntegrateCmp===undefined) {
-  localStorage.removeItem('idw_not_integrate_cmp');  
+  localStorage.removeItem('not-integrate-cmp');  
 } else {
-  localStorage.setItem('idw_not_integrate_cmp', notIntegrateCmp);
+  localStorage.setItem('not-integrate-cmp', notIntegrateCmp);
 }
 
 if(retargetingSwitch){
-  localStorage.setItem('retargeting_on', retargetingSwitch);  
+  localStorage.setItem('retargeting-on', retargetingSwitch);  
+}
+
+if(loginInNewTabSwitch){
+  localStorage.setItem('login-in-new-tab', loginInNewTabSwitch);  
 }
 
 if(pageExclusionSwitch && exclusionPageURLs && exclusionPageURLs.length > 0){
   const urlExceptionList = exclusionPageURLs.map(x => x.pageURL);
-  localStorage.setItem('idw_login_exception_pages', JSON.stringify(urlExceptionList));
+  localStorage.setItem('login-exception-pages', JSON.stringify(urlExceptionList));
 }else{
-  localStorage.removeItem('idw_login_exception_pages');
+  localStorage.removeItem('login-exception-pages');
 }
 
 /*
@@ -420,7 +431,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "idw_client_id"
+                    "string": "client-id"
                   },
                   {
                     "type": 8,
@@ -451,7 +462,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "idw_cmp_provider"
+                    "string": "cmp-provider"
                   },
                   {
                     "type": 8,
@@ -482,7 +493,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "idw_color_primary"
+                    "string": "color-primary"
                   },
                   {
                     "type": 8,
@@ -513,7 +524,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "idw_not_integrate_cmp"
+                    "string": "not-integrate-cmp"
                   },
                   {
                     "type": 8,
@@ -544,7 +555,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "idw_hide_button"
+                    "string": "hide-button"
                   },
                   {
                     "type": 8,
@@ -575,7 +586,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "soft_privacy_regulated"
+                    "string": "soft-privacy-regulated"
                   },
                   {
                     "type": 8,
@@ -606,7 +617,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "idw_login_exception_pages"
+                    "string": "login-exception-pages"
                   },
                   {
                     "type": 8,
@@ -637,7 +648,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "retargeting_on"
+                    "string": "retargeting-on"
                   },
                   {
                     "type": 8,
@@ -668,7 +679,38 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "idw_cmp_provider_cookie_group"
+                    "string": "cmp-provider-cookie-group"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "login-in-new-tab"
                   },
                   {
                     "type": 8,
