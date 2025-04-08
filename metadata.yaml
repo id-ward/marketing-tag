@@ -15,6 +15,9 @@
 homepage: "https://www.anonymised.io"
 documentation: "https://support.anonymised.io/integrate/install-the-anonymised-tag-using-gtm"
 versions:
+  - sha: 48350a18305b5ca881acf20cc794a749e81f22a0
+    changeNotes: >
+        Added new setting `login-in-new-tab`. Renamed the rest of the settings
   - sha: 65794619eb5006fccea41ea6f4d508740e4b2725
     changeNotes: >
         Added support for CookieScript and Klaro CMPs
