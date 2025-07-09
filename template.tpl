@@ -117,6 +117,10 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "klaro",
             "displayValue": "Klaro"
+          },
+          {
+            "value": "civic",
+            "displayValue": "Civic"
           }
         ],
         "simpleValueType": true,
@@ -152,6 +156,11 @@ ___TEMPLATE_PARAMETERS___
           {
             "paramName": "CmpProvider",
             "paramValue": "klaro",
+            "type": "EQUALS"
+          },
+          {
+            "paramName": "CmpProvider",
+            "paramValue": "civic",
             "type": "EQUALS"
           }
         ]
