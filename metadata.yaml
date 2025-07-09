@@ -15,6 +15,9 @@
 homepage: "https://www.anonymised.io"
 documentation: "https://support.anonymised.io/integrate/install-the-anonymised-tag-using-gtm"
 versions:
+  - sha: 5328d29c017a2a93b07db9256c314165a5788dce
+    changeNotes: >
+        Added `Civic Cookie Control` CMP support
   - sha: 48350a18305b5ca881acf20cc794a749e81f22a0
     changeNotes: >
         Added new setting `login-in-new-tab`. Renamed the rest of the settings
