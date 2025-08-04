@@ -47,6 +47,29 @@ ___TEMPLATE_PARAMETERS___
             "type": "NON_EMPTY"
           }
         ]
+      },
+      {
+        "type": "SELECT",
+        "name": "TagType",
+        "displayName": "Select the Tag type to load: publisher or advertiser",
+        "macrosInSelect": false,
+        "selectItems": [
+          {
+            "value": "publisher",
+            "displayValue": "Publisher"
+          },
+          {
+            "value": "advertiser",
+            "displayValue": "Advertiser"
+          }
+        ],
+        "simpleValueType": true,
+        "notSetText": "Select the Tag type to load",
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          }
+        ]
       }
     ]
   },
@@ -298,6 +321,7 @@ log('data =', data);
 
 const src = 'https://static.anonymised.io/light/loader.js?ref=gtm';
 const clientId = data.ClientId;
+const tagType = data.TagType;
 
 const cmpProvider = data.CmpProvider;
 const sppmId = data.SourcepointPMId;
@@ -312,6 +336,7 @@ const privacyOverride = data.PrivacyControlOverride;
 const loginInNewTabSwitch = data.LoginInNewTabSwitch;
 
 localStorage.setItem('client-id', clientId);
+localStorage.setItem('tag-type', tagType);
 localStorage.setItem('hide-button', !showWidget);
 
 const cmp = sppmId ? 'sourcepoint:'+sppmId : cmpProvider;
@@ -720,6 +745,37 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "login-in-new-tab"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "tag-type"
                   },
                   {
                     "type": 8,
