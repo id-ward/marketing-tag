@@ -15,6 +15,9 @@
 homepage: "https://www.anonymised.io"
 documentation: "https://support.anonymised.io/integrate/install-the-anonymised-tag-using-gtm"
 versions:
+  - sha: 866bbd31802311108ecc7e9dfef150bf18d65f2d
+    changeNotes: >
+        Added new setting `tag-type`
   - sha: 5328d29c017a2a93b07db9256c314165a5788dce
     changeNotes: >
         Added `Civic Cookie Control` CMP support
