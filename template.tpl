@@ -47,29 +47,6 @@ ___TEMPLATE_PARAMETERS___
             "type": "NON_EMPTY"
           }
         ]
-      },
-      {
-        "type": "SELECT",
-        "name": "TagType",
-        "displayName": "Select the Tag type to load: publisher or advertiser",
-        "macrosInSelect": false,
-        "selectItems": [
-          {
-            "value": "publisher",
-            "displayValue": "Publisher"
-          },
-          {
-            "value": "advertiser",
-            "displayValue": "Advertiser"
-          }
-        ],
-        "simpleValueType": true,
-        "notSetText": "Select the Tag type to load",
-        "valueValidators": [
-          {
-            "type": "NON_EMPTY"
-          }
-        ]
       }
     ]
   },
@@ -261,6 +238,12 @@ ___TEMPLATE_PARAMETERS___
       },
       {
         "type": "CHECKBOX",
+        "name": "ConversionTagSwitch",
+        "checkboxText": "Enable conversion tag",
+        "simpleValueType": true
+      },
+      {
+        "type": "CHECKBOX",
         "name": "PageExclusionSwitch",
         "checkboxText": "Configure page exclusions",
         "simpleValueType": true
@@ -269,6 +252,18 @@ ___TEMPLATE_PARAMETERS___
         "type": "CHECKBOX",
         "name": "LoginInNewTabSwitch",
         "checkboxText": "Enable login in new tab",
+        "simpleValueType": true
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "LoginRedirect",
+        "checkboxText": "Enable login redirect",
+        "simpleValueType": true
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "IframeLogin",
+        "checkboxText": "Enable login in Iframe",
         "simpleValueType": true
       },
       {
@@ -319,9 +314,8 @@ const JSON = require('JSON');
 
 log('data =', data);
 
-const src = 'https://static.anonymised.io/light/loader.js?ref=gtm';
+const src = 'https://cdn1.anonymised.io/light/loader.js?ref=gtm';
 const clientId = data.ClientId;
-const tagType = data.TagType;
 
 const cmpProvider = data.CmpProvider;
 const sppmId = data.SourcepointPMId;
@@ -330,13 +324,15 @@ const showWidget = data.ShowWidget;
 const notIntegrateCmp = data.NotIntegrateCmp;
 const primaryColor = data.PrimaryColor;
 const retargetingSwitch = data.RetargetingSwitch;
+const conversionTagSwitch = data.ConversionTagSwitch;
 const pageExclusionSwitch = data.PageExclusionSwitch;
 const exclusionPageURLs = data.PagesForExclusion;
 const privacyOverride = data.PrivacyControlOverride;
 const loginInNewTabSwitch = data.LoginInNewTabSwitch;
+const loginRedirect = data.LoginRedirect;
+const iframeLogin = data.IframeLogin;
 
 localStorage.setItem('client-id', clientId);
-localStorage.setItem('tag-type', tagType);
 localStorage.setItem('hide-button', !showWidget);
 
 const cmp = sppmId ? 'sourcepoint:'+sppmId : cmpProvider;
@@ -364,8 +360,20 @@ if(retargetingSwitch){
   localStorage.setItem('retargeting-on', retargetingSwitch);  
 }
 
+if(conversionTagSwitch){
+  localStorage.setItem('conversion-on', conversionTagSwitch);  
+}
+
 if(loginInNewTabSwitch){
   localStorage.setItem('login-in-new-tab', loginInNewTabSwitch);  
+}
+
+if(loginRedirect){
+  localStorage.setItem('login-redirect', loginRedirect);  
+}
+
+if(iframeLogin){
+  localStorage.setItem('iframe-login', iframeLogin);  
 }
 
 if(pageExclusionSwitch && exclusionPageURLs && exclusionPageURLs.length > 0){
@@ -422,7 +430,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://static.anonymised.io/light/*"
+                "string": "https://cdn1.anonymised.io/light/*"
               }
             ]
           }
@@ -775,7 +783,69 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "tag-type"
+                    "string": "conversion-on"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "login-redirect"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "iframe-login"
                   },
                   {
                     "type": 8,
