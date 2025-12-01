@@ -15,6 +15,9 @@
 homepage: "https://www.anonymised.io"
 documentation: "https://support.anonymised.io/integrate/install-the-anonymised-tag-using-gtm"
 versions:
+  - sha: 522a177011eb5f39c0399b9dc047e7c0afd90273
+    changeNotes: >
+        Updated tag hosting CDN, updated configuration setting
   - sha: 866bbd31802311108ecc7e9dfef150bf18d65f2d
     changeNotes: >
         Added new setting `tag-type`
