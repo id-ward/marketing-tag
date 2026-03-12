@@ -309,12 +309,19 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 const log = require('logToConsole');
 const injectScript = require('injectScript');
-const localStorage = require('localStorage');
-const JSON = require('JSON');
+const setInWindow = require('setInWindow');
+const getUrl = require('getUrl');
+const getContainerVersion = require('getContainerVersion');
 
 log('data =', data);
 
-const src = 'https://cdn1.anonymised.io/light/loader.js?ref=gtm';
+const containerVersion = getContainerVersion();
+const containerId = containerVersion.containerId;
+
+const domain = getUrl('host');
+
+const src = 'https://static.anonymised.io/light/loader.js?ref=' + containerId + (domain ? '&d=' + domain : '');
+
 const clientId = data.ClientId;
 
 const cmpProvider = data.CmpProvider;
@@ -332,63 +339,29 @@ const loginInNewTabSwitch = data.LoginInNewTabSwitch;
 const loginRedirect = data.LoginRedirect;
 const iframeLogin = data.IframeLogin;
 
-localStorage.setItem('client-id', clientId);
-localStorage.setItem('hide-button', !showWidget);
+const cmp = sppmId ? 'sourcepoint:' + sppmId : cmpProvider;
 
-const cmp = sppmId ? 'sourcepoint:'+sppmId : cmpProvider;
-localStorage.setItem('cmp-provider', cmp);
+const config = {};
 
-if(cookieActiveGroup===undefined || cmpProvider===undefined) {
-  localStorage.removeItem('cmp-provider-cookie-group');
-} else {
-  localStorage.setItem('cmp-provider-cookie-group', cookieActiveGroup);
+config.clientId = clientId;
+config.hideButton = (!showWidget).toString();
+
+if (cmp !== undefined) config.cmpProvider = cmp;
+if (cookieActiveGroup !== undefined && cmpProvider !== undefined) config.cmpProviderCookieGroup = cookieActiveGroup;
+if (primaryColor !== undefined) config.colourPrimary = primaryColor;
+if (notIntegrateCmp !== undefined) config.notIntegrateCmp = notIntegrateCmp.toString();
+if (retargetingSwitch !== undefined) config.retargetingOn = retargetingSwitch.toString();
+if (conversionTagSwitch !== undefined) config.conversionOn = conversionTagSwitch.toString();
+if (loginInNewTabSwitch !== undefined) config.loginInNewTab = loginInNewTabSwitch.toString();
+if (loginRedirect !== undefined) config.loginRedirect = loginRedirect.toString();
+if (iframeLogin !== undefined) config.iframeLogin = iframeLogin.toString();
+
+if (pageExclusionSwitch && exclusionPageURLs && exclusionPageURLs.length > 0) {
+  config.loginExceptionPages = exclusionPageURLs.map(function(x) { return x.pageURL; }).join(', ');
 }
 
-if(primaryColor===undefined) {
-  localStorage.removeItem('color-primary');
-} else {
-  localStorage.setItem('color-primary', primaryColor);
-}
+setInWindow('__anonymisedGtmConfig', config, true);
 
-if(notIntegrateCmp===undefined) {
-  localStorage.removeItem('not-integrate-cmp');  
-} else {
-  localStorage.setItem('not-integrate-cmp', notIntegrateCmp);
-}
-
-if(retargetingSwitch){
-  localStorage.setItem('retargeting-on', retargetingSwitch);  
-}
-
-if(conversionTagSwitch){
-  localStorage.setItem('conversion-on', conversionTagSwitch);  
-}
-
-if(loginInNewTabSwitch){
-  localStorage.setItem('login-in-new-tab', loginInNewTabSwitch);  
-}
-
-if(loginRedirect){
-  localStorage.setItem('login-redirect', loginRedirect);  
-}
-
-if(iframeLogin){
-  localStorage.setItem('iframe-login', iframeLogin);  
-}
-
-if(pageExclusionSwitch && exclusionPageURLs && exclusionPageURLs.length > 0){
-  const urlExceptionList = exclusionPageURLs.map(x => x.pageURL);
-  localStorage.setItem('login-exception-pages', JSON.stringify(urlExceptionList));
-}else{
-  localStorage.removeItem('login-exception-pages');
-}
-
-/*
-if(privacyOverride===undefined || privacyOverride===false){
-  localStorage.removeItem('soft_privacy_regulated');
-} else {
-  localStorage.setItem('soft_privacy_regulated', privacyOverride);
-}*/
 injectScript(src, data.gtmOnSuccess, data.gtmOnFailure);
 
 
@@ -430,7 +403,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://cdn1.anonymised.io/light/*"
+                "string": "https://static.anonymised.io/light/*"
               }
             ]
           }
@@ -445,7 +418,7 @@ ___WEB_PERMISSIONS___
   {
     "instance": {
       "key": {
-        "publicId": "access_local_storage",
+        "publicId": "access_globals",
         "versionId": "1"
       },
       "param": [
@@ -468,392 +441,28 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
                   }
                 ],
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "client-id"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
+                    "string": "__anonymisedGtmConfig"
                   },
                   {
                     "type": 8,
                     "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "cmp-provider"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
                   },
                   {
                     "type": 8,
                     "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "color-primary"
                   },
                   {
                     "type": 8,
                     "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "not-integrate-cmp"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "hide-button"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "soft-privacy-regulated"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "login-exception-pages"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "retargeting-on"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "cmp-provider-cookie-group"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "login-in-new-tab"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "conversion-on"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "login-redirect"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "iframe-login"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
                   }
                 ]
               }
@@ -864,6 +473,41 @@ ___WEB_PERMISSIONS___
     },
     "clientAnnotations": {
       "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "read_container_data",
+        "versionId": "1"
+      },
+      "param": []
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "get_url",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "urlParts",
+          "value": {
+            "type": 1,
+            "string": "any"
+          }
+        },
+        {
+          "key": "queriesAllowed",
+          "value": {
+            "type": 1,
+            "string": "any"
+          }
+        }
+      ]
     },
     "isRequired": true
   }
