@@ -15,6 +15,9 @@
 homepage: "https://www.anonymised.io"
 documentation: "https://support.anonymised.io/integrate/install-the-anonymised-tag-using-gtm"
 versions:
+  - sha: 28872e85f356550288d9d43647edeb0e7b089466
+    changeNotes: >
+        Removed all GTM settings. The Tag is configured using the Audience Builder portal
   - sha: 1810419e29997c575c7e840ec199ab2b9ae3e6f8
     changeNotes: >
         Serve Tag from API, don't use localStorage anymore, added 'domain' and GTM container ID as a tag QSP
